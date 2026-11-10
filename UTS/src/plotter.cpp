@@ -61,10 +61,45 @@ bool Plotter::saveData(
     return true;
 }
 
+// Fungsi untuk memanggil Gnuplot dan menampilkan grafik
 bool Plotter::plotGraph(
     const std::string& dataFile,
     const std::string& formula
 ) {
-    // Implementasi Gnuplot akan dibuat pada tahap berikutnya.
-    return false;
+    const std::string scriptFile = "UTS/output/plot.gp";
+
+    std::ofstream script(scriptFile);
+
+    if (!script.is_open()) {
+        std::cerr << "Gagal membuat script Gnuplot!\n";
+        return false;
+    }
+
+    script << "set title 'Grafik Fungsi f(x)'\n";
+    script << "set xlabel 'X'\n";
+    script << "set ylabel 'Y'\n";
+    script << "set grid\n";
+    script << "set zeroaxis\n";
+    script << "set border linewidth 1.5\n";
+    script << "set samples 500\n";
+    script << "plot '" << dataFile
+           << "' using 1:2 with lines linewidth 2 "
+           << "title 'f(x) = " << formula << "'\n";
+
+    script.close();
+
+    const std::string gnuplotPath =
+        "\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\"";
+
+    const std::string command =
+        gnuplotPath + " -persist \"" + scriptFile + "\"";
+
+    int result = std::system(command.c_str());
+
+    if (result != 0) {
+        std::cerr << "Gagal menjalankan Gnuplot!\n";
+        return false;
+    }
+
+    return true;
 }
