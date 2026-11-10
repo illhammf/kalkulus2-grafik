@@ -25,8 +25,16 @@ std::vector<Point> Plotter::generatePoints(
         return points;
     }
 
-    if (x1 >= x2) {
-        std::cerr << "Batas bawah X harus lebih kecil dari batas atas X!\n";
+    // Jika batas X terbalik, tukar secara otomatis
+    if (x1 > x2) {
+        std::swap(x1, x2);
+
+        std::cout << "\nBatas X terbalik terdeteksi!\n";
+        std::cout << "Batas X otomatis disesuaikan.\n";
+    }
+
+    if (x1 == x2) {
+        std::cerr << "Batas bawah dan atas X tidak boleh sama!\n";
         return points;
     }
 
