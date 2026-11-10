@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <process.h>
 #include <cstdio>
+#include <algorithm>
 
 // Fungsi untuk menghasilkan titik-titik grafik dari rumus matematika
 std::vector<Point> Plotter::generatePoints(
