@@ -1,14 +1,12 @@
-
 #include "plotter.hpp"
 #include "function.hpp"
 
-#include <cstdlib>
 #include <fstream>
 #include <cmath>
 #include <iostream>
 #include <iomanip>
-#include <process.h>
-#include <cstdio>
+#include <limits>
+#include <cstddef>
 
 // Fungsi untuk menghasilkan titik-titik grafik dari rumus matematika
 std::vector<Point> Plotter::generatePoints(
