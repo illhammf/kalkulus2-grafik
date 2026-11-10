@@ -48,5 +48,14 @@ int main() {
     std::cout << "Jumlah titik: " << points.size() << "\n";
     std::cout << "Data tersimpan di UTS/data/points.dat\n";
 
+    std::cout << "\nMembuka grafik...\n";
+
+    if (!Plotter::plotGraph("UTS/data/points.dat", formula)) {
+        std::cout << "Grafik gagal ditampilkan.\n";
+        return 1;
+    }
+
+    std::cout << "Grafik berhasil ditampilkan!\n";
+
     return 0;
 }
