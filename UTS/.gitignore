@@ -1,0 +1,16 @@
+# Compiled files
+*.exe
+*.o
+*.obj
+
+# Generated data
+data/*.csv
+output/*
+
+# Keep folder structure
+!data/.gitkeep
+!output/.gitkeep
+
+# Temporary files
+*.tmp
+*.log
