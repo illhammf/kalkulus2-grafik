@@ -78,6 +78,19 @@ int main() {
         return 1;
     }
 
+    std::cout << "\n====================================\n";
+    std::cout << "       METODE PERHITUNGAN\n";
+    std::cout << "====================================\n";
+
+    std::cout << "Fungsi       : " << formula << "\n";
+    std::cout << "Batas bawah  : " << x1 << "\n";
+    std::cout << "Batas atas   : " << x2 << "\n";
+    std::cout << "Interval     : " << density << "\n";
+
+    std::cout << "\nRumus perhitungan:\n";
+    std::cout << "x(i) = x1 + (i * D)\n";
+    std::cout << "y(i) = f(x(i))\n";
+
     std::cout << "\nMenghitung titik grafik...\n";
 
     std::vector<Point> points = Plotter::generatePoints(
