@@ -100,7 +100,7 @@ bool Plotter::plotGraph(
     intptr_t result = _spawnl(
         _P_NOWAIT,
         gnuplotPath,
-        gnuplotPath,
+        "gnuplot",
         "-persist",
         scriptFile.c_str(),
         nullptr
