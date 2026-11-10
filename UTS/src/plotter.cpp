@@ -64,6 +64,7 @@ bool Plotter::saveData(
 }
 
 // Fungsi untuk memanggil Gnuplot dan menampilkan grafik
+
 bool Plotter::plotGraph(
     const std::string& dataFile,
     const std::string& formula
@@ -84,22 +85,29 @@ bool Plotter::plotGraph(
     script << "set zeroaxis\n";
     script << "set border linewidth 1.5\n";
     script << "set samples 500\n";
+
     script << "plot '" << dataFile
            << "' using 1:2 with lines linewidth 2 "
            << "title 'f(x) = " << formula << "'\n";
 
     script.close();
 
-    const std::string gnuplotPath =
-        "\"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\"";
+    const char* gnuplotPath =
+        "C:\\Program Files\\gnuplot\\bin\\gnuplot.exe";
 
-    const std::string command =
-        gnuplotPath + " -persist \"" + scriptFile + "\"";
+    std::cout << "Menjalankan Gnuplot...\n";
 
-    int result = std::system(command.c_str());
+    intptr_t result = _spawnl(
+        _P_NOWAIT,
+        gnuplotPath,
+        gnuplotPath,
+        "-persist",
+        scriptFile.c_str(),
+        nullptr
+    );
 
-    if (result != 0) {
-        std::cerr << "Gagal menjalankan Gnuplot!\n";
+    if (result == -1) {
+        perror("Gagal menjalankan Gnuplot");
         return false;
     }
 
