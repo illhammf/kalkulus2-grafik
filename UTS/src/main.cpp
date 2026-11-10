@@ -92,6 +92,49 @@ int main() {
         return 1;
     }
 
+    // Menampilkan tabel hasil perhitungan
+    std::cout << "\n";
+    std::cout << "============================================================\n";
+    std::cout << "              TABEL HASIL PERHITUNGAN FUNGSI\n";
+    std::cout << "============================================================\n";
+
+    std::cout << std::left
+              << std::setw(10) << "No."
+              << std::setw(20) << "Nilai X"
+              << std::setw(25) << "Nilai Y"
+              << "\n";
+
+    std::cout << "------------------------------------------------------------\n";
+
+    std::cout << std::fixed << std::setprecision(6);
+
+    // Batas tampilan agar terminal tidak terlalu panjang
+    const std::size_t DISPLAY_LIMIT = 100;
+
+    std::size_t displayCount = std::min(
+        points.size(),
+        DISPLAY_LIMIT
+    );
+
+    for (std::size_t i = 0; i < displayCount; i++) {
+        std::cout << std::left
+                  << std::setw(10) << i + 1
+                  << std::setw(20) << points[i].x
+                  << std::setw(25) << points[i].y
+                  << "\n";
+    }
+
+    if (points.size() > DISPLAY_LIMIT) {
+        std::cout << "\n... "
+                  << points.size() - DISPLAY_LIMIT
+                  << " titik lainnya disimpan dalam file data.\n";
+    }
+
+    std::cout << "------------------------------------------------------------\n";
+    std::cout << "Total titik valid: " << points.size() << "\n";
+    std::cout << "============================================================\n\n";
+
+
     if (!Plotter::saveData(points, "UTS/data/points.dat")) {
         std::cout << "Gagal menyimpan data grafik.\n";
         return 1;
