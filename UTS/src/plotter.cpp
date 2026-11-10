@@ -163,7 +163,7 @@ bool Plotter::plotGraph(
 
     std::cout << "Menjalankan Gnuplot...\n";
 
-    intptr_t result = _spawnl(
+    auto result = _spawnl(
         _P_NOWAIT,
         gnuplotPath,
         "gnuplot",
@@ -171,7 +171,6 @@ bool Plotter::plotGraph(
         scriptFile.c_str(),
         nullptr
     );
-
     if (result == -1) {
         perror("Gagal menjalankan Gnuplot");
         return false;
