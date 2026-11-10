@@ -78,13 +78,32 @@ bool Plotter::plotGraph(
         return false;
     }
 
-    script << "set title 'Grafik Fungsi f(x)'\n";
-    script << "set xlabel 'X'\n";
-    script << "set ylabel 'Y'\n";
-    script << "set grid\n";
-    script << "set zeroaxis\n";
+    // Menulis perintah Gnuplot ke dalam file script
+    script << "set terminal qt size 1200,800 font 'Arial,12'\n";
+
+    script << "set title 'Grafik Fungsi f(x)' font 'Arial,16' offset 0,-0.5\n";
+
+    script << "set xlabel 'Sumbu X' font 'Arial,12' offset 0,-1\n";
+    script << "set ylabel 'Sumbu Y' font 'Arial,12' offset -1,0\n";
+
+    script << "set xtics font 'Arial,10'\n";
+    script << "set ytics font 'Arial,10'\n";
+
+    script << "set grid xtics ytics linewidth 1 dashtype 2\n";
+    script << "set zeroaxis linewidth 1.5\n";
+
     script << "set border linewidth 1.5\n";
-    script << "set samples 500\n";
+
+    script << "set tmargin 4\n";
+    script << "set bmargin 5\n";
+    script << "set lmargin 9\n";
+    script << "set rmargin 4\n";
+
+    script << "set autoscale\n";
+    script << "set mouse\n";
+
+    script << "set samples 1000\n";
+
 
     script << "plot '" << dataFile
            << "' using 1:2 with lines linewidth 2 "
