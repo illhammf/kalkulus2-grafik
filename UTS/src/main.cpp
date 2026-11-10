@@ -6,6 +6,8 @@
 #include <vector>
 #include <cmath>
 #include <cctype>
+#include <iomanip>
+#include <algorithm>
 
 // Membaca angka dengan validasi
 bool readNumber(const std::string& prompt, double& value) {
