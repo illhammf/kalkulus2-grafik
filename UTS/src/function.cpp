@@ -2,7 +2,7 @@
 #include "function.hpp"
 
 MathematicalFunction::MathematicalFunction()
-    : x(0.0), valid(false) {
+    : x(0.0), valid(false), errorMessage("") {
 
     symbolTable.add_variable("x", x);
     symbolTable.add_constants();
@@ -11,20 +11,37 @@ MathematicalFunction::MathematicalFunction()
 }
 
 bool MathematicalFunction::setFormula(const std::string& formula) {
+    if (formula.empty()) {
+        valid = false;
+        errorMessage = "Rumus tidak boleh kosong.";
+        return false;
+    }
+
     valid = parser.compile(formula, expression);
-    return valid;
+
+    if (!valid) {
+        errorMessage = "Format rumus matematika tidak valid.";
+        return false;
+    }
+
+    errorMessage.clear();
+    return true;
 }
 
-double MathematicalFunction::evaluate(double inputX) const {
+double MathematicalFunction::evaluate(double inputX) {
     if (!valid) {
         return 0.0;
     }
 
-    const_cast<MathematicalFunction*>(this)->x = inputX;
+    x = inputX;
 
     return expression.value();
 }
 
 bool MathematicalFunction::isValid() const {
     return valid;
+}
+
+std::string MathematicalFunction::getErrorMessage() const {
+    return errorMessage;
 }
