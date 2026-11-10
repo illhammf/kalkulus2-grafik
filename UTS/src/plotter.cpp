@@ -10,6 +10,7 @@
 #include <process.h>
 #include <cstdio>
 
+// Fungsi untuk menghasilkan titik-titik grafik dari rumus matematika
 std::vector<Point> Plotter::generatePoints(
     double x1,
     double x2,
@@ -18,23 +19,69 @@ std::vector<Point> Plotter::generatePoints(
 ) {
     std::vector<Point> points;
 
+    // Validasi batas X
+    if (!std::isfinite(x1) || !std::isfinite(x2)) {
+        std::cerr << "Batas X harus berupa angka yang valid!\n";
+        return points;
+    }
+
+    if (x1 >= x2) {
+        std::cerr << "Batas bawah X harus lebih kecil dari batas atas X!\n";
+        return points;
+    }
+
+    // Validasi interval
+    if (!std::isfinite(density) || density <= 0) {
+        std::cerr << "Interval harus lebih besar dari 0!\n";
+        return points;
+    }
+
+    // Validasi rumus
     MathematicalFunction function;
 
     if (!function.setFormula(formula)) {
-        std::cerr << "Rumus matematika tidak valid!\n";
+        std::cerr << function.getErrorMessage() << "\n";
         return points;
     }
 
-    if (density <= 0 || x1 >= x2) {
-        std::cerr << "Rentang atau interval tidak valid!\n";
+    // Hitung jumlah titik sebelum melakukan perulangan
+    long double intervalCount =
+        (static_cast<long double>(x2) -
+         static_cast<long double>(x1)) /
+        static_cast<long double>(density);
+
+    long double estimatedPoints = std::floor(intervalCount) + 1;
+
+    const long double MAX_POINTS = 1000000;
+
+    if (!std::isfinite(estimatedPoints) ||
+        estimatedPoints > MAX_POINTS) {
+        std::cerr << "Jumlah titik terlalu banyak!\n";
+        std::cerr << "Maksimal 1.000.000 titik.\n";
         return points;
     }
 
-    for (double x = x1; x <= x2; x += density) {
-        double y = function.evaluate(x);
+    std::size_t totalPoints =
+        static_cast<std::size_t>(estimatedPoints);
 
-        if (std::isfinite(y)) {
-            points.push_back({x, y});
+    points.reserve(totalPoints);
+
+    // Hitung nilai fungsi
+    for (std::size_t i = 0; i < totalPoints; i++) {
+        double currentX = static_cast<double>(
+            static_cast<long double>(x1) +
+            static_cast<long double>(i) * density
+        );
+
+        if (currentX > x2) {
+            break;
+        }
+
+        double currentY = function.evaluate(currentX);
+
+        // Abaikan hasil yang tidak terdefinisi
+        if (std::isfinite(currentY)) {
+            points.push_back({currentX, currentY});
         }
     }
 
