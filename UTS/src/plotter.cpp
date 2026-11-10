@@ -2,6 +2,7 @@
 #include "plotter.hpp"
 #include "function.hpp"
 
+#include <cstdlib>
 #include <fstream>
 #include <cmath>
 #include <iostream>
