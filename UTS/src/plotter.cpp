@@ -7,6 +7,8 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <process.h>
+#include <cstdio>
 
 std::vector<Point> Plotter::generatePoints(
     double x1,
