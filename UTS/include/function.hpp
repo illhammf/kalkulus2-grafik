@@ -2,7 +2,6 @@
 #define FUNCTION_HPP
 
 #include <string>
-#include <vector>
 #include <exprtk.hpp>
 
 class MathematicalFunction {
@@ -18,15 +17,18 @@ private:
     Parser parser;
 
     bool valid;
+    std::string errorMessage;
 
 public:
     MathematicalFunction();
 
     bool setFormula(const std::string& formula);
 
-    double evaluate(double inputX) const;
+    double evaluate(double inputX);
 
     bool isValid() const;
+
+    std::string getErrorMessage() const;
 };
 
 #endif
