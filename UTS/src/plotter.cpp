@@ -106,7 +106,7 @@ bool Plotter::plotGraph(
 
 
     script << "plot '" << dataFile
-           << "' using 1:2 with lines linewidth 2 "
+           << "' using 1:2 with lines linewidth 3 "
            << "title 'f(x) = " << formula << "'\n";
 
     script.close();
